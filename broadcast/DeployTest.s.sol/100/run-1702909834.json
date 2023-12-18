@@ -31,7 +31,7 @@
       "to": "0x4e59b44847b379578588920cA78FbF26c0B4956C",
       "cumulativeGasUsed": "0x23787f",
       "gasUsed": "0x13bf25",
-      "contractAddress": "0x7962b6711C1bd8b26e2e7C1a5728604E6779fE0A",
+      "contractAddress": null,
       "logs": [
         {
           "address": "0x8e5bBbb09Ed1ebdE8674Cda39A0c169401db4252",
@@ -59,7 +59,7 @@
   "pending": [],
   "path": "J:/goobers/creation/clogs/broadcast\\DeployTest.s.sol\\100\\run-latest.json",
   "returns": {},
-  "timestamp": 1702909863,
+  "timestamp": 1702909834,
   "chain": 100,
   "multi": false,
   "commit": "dfa34ee"

@@ -22,7 +22,7 @@ contract DeployTest is Script {
 		address CowVaultRelay = 0xC92E8bdf79f0507f65a392b0ab4667716BFE0110;
 		address composableCow = 0xfdaFc9d1902f4e0b84f65F49f244b32b31013b74;
 
-		CornArb cornArb = CornArb(0x9027Ad471a1B992602d0996Ce96Dcb011249e3C8);
+		// CornArb cornArb = CornArb(0x9027Ad471a1B992602d0996Ce96Dcb011249e3C8);
 
     function run() external {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");

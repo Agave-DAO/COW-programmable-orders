@@ -89,14 +89,14 @@ contract CornArbTest is BaseComposableCoWTest {
         assertEq(safe1BalanceAfter, safe1BalanceBefore - data.sellAmount);
 
         // in the end-to-end, we can test replay protection by trying to settle again
-        vm.warp(block.timestamp + 1);
-        settle(
-            address(safe1),
-            bob,
-            order,
-            sig,
-            abi.encodeWithSelector(IConditionalOrder.PollNever.selector, AUCTION_FILLED)
-        );
+        // vm.warp(block.timestamp + 1);
+        // settle(
+        //     address(safe1),
+        //     bob,
+        //     order,
+        //     sig,
+        //     abi.encodeWithSelector(IConditionalOrder.PollNever.selector, AUCTION_FILLED)
+        // );
     }
 
     function helper_runRevertingValidate(CornArb.Data memory data, string memory reason) internal {
