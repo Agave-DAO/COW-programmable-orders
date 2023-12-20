@@ -21,45 +21,14 @@
       "additionalContracts": []
     }
   ],
-  "receipts": [
-    {
-      "transactionHash": "0x1e28a57bc923a487d14616007437058d3ea43d7784de12bd790fb5eea3df296e",
-      "transactionIndex": "0x1",
-      "blockHash": "0xe3bdb86c2e81ebf28485abdc3f95af47b84eb926f4fff4242d7476f9237e3173",
-      "blockNumber": "0x1e13d6f",
-      "from": "0xBF8d706C844F1849B063870a42417C20227276F6",
-      "to": "0x4e59b44847b379578588920cA78FbF26c0B4956C",
-      "cumulativeGasUsed": "0x1a603a",
-      "gasUsed": "0x1339cb",
-      "contractAddress": null,
-      "logs": [
-        {
-          "address": "0x8e5bBbb09Ed1ebdE8674Cda39A0c169401db4252",
-          "topics": [
-            "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
-            "0x000000000000000000000000d36997955dc839ba3e3da386f7ebfdfb241f084a",
-            "0x0000000000000000000000005e15d5e33d318dced84bfe3f4eace07909be6d9c"
-          ],
-          "data": "0x00000000000000000000000000000002f050fe938943acc45f65568000000000",
-          "blockHash": "0xe3bdb86c2e81ebf28485abdc3f95af47b84eb926f4fff4242d7476f9237e3173",
-          "blockNumber": "0x1e13d6f",
-          "transactionHash": "0x1e28a57bc923a487d14616007437058d3ea43d7784de12bd790fb5eea3df296e",
-          "transactionIndex": "0x1",
-          "logIndex": "0x5e",
-          "removed": false
-        }
-      ],
-      "status": "0x1",
-      "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000400000000000000000000000000000020000400000000000001000000000000000000000000000000000000000000000000000020000000000000000001000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000100000000000000000000000000000",
-      "type": "0x2",
-      "effectiveGasPrice": "0xb2d05e09"
-    }
-  ],
+  "receipts": [],
   "libraries": [],
-  "pending": [],
+  "pending": [
+    "0x1e28a57bc923a487d14616007437058d3ea43d7784de12bd790fb5eea3df296e"
+  ],
   "path": "J:/goobers/creation/clogs/broadcast\\DeployTest.s.sol\\100\\run-latest.json",
   "returns": {},
-  "timestamp": 1703087573,
+  "timestamp": 1703087566,
   "chain": 100,
   "multi": false,
   "commit": "66047e6"

@@ -28,8 +28,8 @@ contract CornArb is BaseConditionalOrder {
     struct Data {
         IERC20 sellToken;
         IERC20 buyToken;
-        address receiver;
-        uint256 sellAmount;
+        //address receiver;
+        //uint256 sellAmount;
         bytes32 appData;
     }
 
@@ -97,22 +97,25 @@ contract CornArb is BaseConditionalOrder {
 				}
 
 				uint oracleSellTokenPrice = oracle.getAssetPrice(address(data.sellToken));
-				if (IERC20(data.sellToken).balanceOf(owner) * oracleSellTokenPrice <= 20 ether * 1 ether){
+				uint sellAmount = 1 ether * 20 ether / oracleSellTokenPrice;
+
+				if (IERC20(data.sellToken).balanceOf(owner) < sellAmount){
 						revert("no balance");
 				}
+
 				uint oracleBuyTokenPrice = oracle.getAssetPrice(address(data.buyToken));
 
 				uint decimalsBuyToken = 10**IERC20Metadata(address(data.buyToken)).decimals();
 				uint decimalsSellToken = 10**IERC20Metadata(address(data.sellToken)).decimals();
 
-				uint oracleBuyAmount = oracleSellTokenPrice  * data.sellAmount * decimalsBuyToken / (oracleBuyTokenPrice * decimalsSellToken);
+				uint oracleBuyAmount = oracleSellTokenPrice  * sellAmount * decimalsBuyToken / (oracleBuyTokenPrice * decimalsSellToken);
 				uint marketBuyAmount = oracleBuyAmount + oracleBuyAmount * 3 / 1000; // we want a price at least 0.3% better than oracle price, if available
 
         order = GPv2Order.Data(
             data.sellToken,
             data.buyToken,
-            data.receiver,
-            data.sellAmount,
+            owner,
+            sellAmount,
             marketBuyAmount,
             validToBucket(180), // expiry
             data.appData,
@@ -150,6 +153,5 @@ contract CornArb is BaseConditionalOrder {
      */
     function _validateData(Data memory data) internal pure {
         if (data.sellToken == data.buyToken) revert OrderNotValid(ERR_SAME_TOKENS);
-        if (data.sellAmount == 0) revert OrderNotValid(ERR_MIN_SELL_AMOUNT);
     }
 }

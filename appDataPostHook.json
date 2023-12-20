@@ -1,1 +1,1 @@
-{"appCode":"CoW Swap","metadata":{"hooks":{"post":[{"callData":"0x37c36970","gasLimit":"700000","target":"0x7962b6711C1bd8b26e2e7C1a5728604E6779fE0A"}],"version":"0.1.0"}},"version":"0.10.0"}
+{"appCode":"CoW Swap","metadata":{"hooks":{"post":[{"callData":"0x37c36970","gasLimit":"700000","target":"0xd36997955DC839ba3e3dA386f7ebFdFB241f084a"}],"version":"0.1.0"}},"version":"0.10.0"}
