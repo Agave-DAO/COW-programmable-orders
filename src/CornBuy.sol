@@ -23,7 +23,7 @@ string constant ERR_MIN_SELL_AMOUNT = "sellAmount must be gt 0";
  * @author CoW Protocol Developers
  * @author Pogo (changes specific to )
  */
-contract CornArb is BaseConditionalOrder {
+contract CornBuy is BaseConditionalOrder {
     /// @dev `staticInput` data struct for buying
     struct Data {
         IERC20 sellToken;
@@ -57,10 +57,10 @@ contract CornArb is BaseConditionalOrder {
 		function depositOnBehalfOfAgaveDAO() external {
 				uint balance = IERC20(WBTC).balanceOf(owner);
 				IERC20(WBTC).transferFrom(owner, address(this), balance);
-				if (IERC20(variableDebtWTBC).balanceOf(agaveDao) >= balance){
+				if (IERC20(variableDebtWTBC).balanceOf(owner) >= balance){
 						pool.repay(WBTC, balance, 2, agaveDao);
 				} else {
-						pool.deposit(WBTC, balance, agaveDao, 0x00);
+						pool.deposit(WBTC, balance, owner, 0x00);
 				}
 				curSwapWBTC += balance;
 		}
@@ -97,7 +97,7 @@ contract CornArb is BaseConditionalOrder {
 				}
 
 				uint oracleSellTokenPrice = oracle.getAssetPrice(address(data.sellToken));
-				if (IERC20(data.sellToken).balanceOf(owner) * oracleSellTokenPrice <= 20 ether * 1 ether){
+				if (IERC20(data.sellToken).balanceOf(owner) * oracleSellTokenPrice <= 20 ether){
 						revert("no balance");
 				}
 				uint oracleBuyTokenPrice = oracle.getAssetPrice(address(data.buyToken));
