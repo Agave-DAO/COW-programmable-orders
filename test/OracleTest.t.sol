@@ -10,14 +10,32 @@ import "../src/AgaveHoldingsOracle.sol";
 
 contract CornArbTest is Test {
 
+		uint256 gcFork;
 
-    CornArb cornArb;
+    AgaveHoldingsOracle agaveHoldingsOracle;
     address safe = 0x90AA4056945B9f4D8A9A301A6CAD95b0A7AfAfBa;
 
-    function setUp() public virtual override(BaseComposableCoWTest) {
+    function setUp() public {
 
-        // cornArb = new CornArb(ComposableCoW(COMPOSABLE_COW));
-				cornArb = CornArb(0xd36997955DC839ba3e3dA386f7ebFdFB241f084a);
+				gcFork = vm.createFork("https://rpc.gnosis.gateway.fm/");
+				vm.selectFork(gcFork);
+
+				agaveHoldingsOracle = new AgaveHoldingsOracle();
     }
+
+		function testTest() public {
+				console.log("Following are presented with no decimals for visibility");
+				uint agveBalance = agaveHoldingsOracle.agveHoldings();
+				console.log("Agve Token Holdings (in treasury): ", agveBalance / 1 ether);
+				uint assetsBalance = agaveHoldingsOracle.assetHoldingsValue();
+				console.log("Asset balance (in treasury): ", assetsBalance / 1 ether);
+				uint agveDepositsValue = agaveHoldingsOracle.agaveDepositsValue();
+				console.log("XDAI deposits-debts (in pool): ",agveDepositsValue / 1 ether);
+				(uint agveLPHoldings, uint WETHLPHoldingsValue, uint GNOLPHoldingsValue) = agaveHoldingsOracle.LPHoldings();
+				console.log("Agve token holdings (in LPs): ", agveLPHoldings / 1 ether);
+				console.log("ETH + GNO value (in LPs): ", (WETHLPHoldingsValue + GNOLPHoldingsValue) / 1 ether);
+				uint oraclePrice = agaveHoldingsOracle.agavePrice();
+				console.log("Resulting Agave price: ", oraclePrice / 1 ether);
+		}
 
 }
