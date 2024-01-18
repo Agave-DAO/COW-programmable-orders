@@ -47,10 +47,12 @@ contract GenericArb is BaseConditionalOrder {
 
 		uint256 amtToSellDefault = 20 ether;
 
-        mapping(address => uint256) amtToSellForAsset;
+    mapping(address => uint256) amtToSellForAsset;
 
     constructor(ComposableCoW _composableCow, address _owner) {
         composableCow = _composableCow;
+				amtToSellForAsset[0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1] = 100 ether; // WETH
+				amtToSellForAsset[0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d] = 50 ether; // WXDAI
 				owner = _owner;
     }
 
@@ -76,7 +78,7 @@ contract GenericArb is BaseConditionalOrder {
         _validateData(data);
 
 				uint oracleSellTokenPrice = oracle.getAssetPrice(address(data.sellToken));
-                uint amtToSell = (amtToSellForAsset[address(data.sellToken)] == 0) ? amtToSellForAsset[address(data.sellToken)] : amtToSellDefault;
+        uint amtToSell = (amtToSellForAsset[address(data.sellToken)] != 0) ? amtToSellForAsset[address(data.sellToken)] : amtToSellDefault;
 				uint sellAmount = 1 ether * amtToSell / oracleSellTokenPrice;
 
 				if (IERC20(data.sellToken).balanceOf(owner) < sellAmount){
@@ -89,7 +91,7 @@ contract GenericArb is BaseConditionalOrder {
 				uint decimalsSellToken = 10**IERC20Metadata(address(data.sellToken)).decimals();
 
 				uint oracleBuyAmount = oracleSellTokenPrice  * sellAmount * decimalsBuyToken / (oracleBuyTokenPrice * decimalsSellToken);
-				uint marketBuyAmount = oracleBuyAmount + oracleBuyAmount * 3 / 1000; // we want a price at least 0.3% better than oracle price, if available
+				uint marketBuyAmount = oracleBuyAmount + oracleBuyAmount * 2 / 1000; // we want a price at least 0.2% better than oracle price, if available
 
         order = GPv2Order.Data(
             data.sellToken,

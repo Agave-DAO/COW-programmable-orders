@@ -7,6 +7,7 @@ import "forge-std/Script.sol";
 import "composable/ComposableCoW.sol";
 import "../src/AgaveHoldingsOracle.sol";
 import {DutchAuction} from "../src/DutchAuction.sol";
+import {GenericArb} from "../src/GenericArb.sol";
 
 contract Deploy is Script {
     function run() external {
@@ -35,11 +36,11 @@ contract Deploy is Script {
     vm.startBroadcast(deployerPrivateKey);
 
         // Deploy DutchAuction
-       // new DutchAuction{salt: ""}(ComposableCoW(composableCow));
+       new GenericArb{salt: ""}(ComposableCoW(composableCow), 0x90AA4056945B9f4D8A9A301A6CAD95b0A7AfAfBa);
 
        
         // Deploy Oracle
-     new AgaveHoldingsOracle();
+    //  new AgaveHoldingsOracle();
 
      vm.stopBroadcast();
     }
