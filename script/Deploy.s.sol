@@ -18,15 +18,17 @@ contract Deploy is Script {
  //////////////////////////////////////////////////////////////*/
 
     uint256 deployerPrivateKey = 0;
-    string memory mnemonic = vm.envString('MNEMONIC');
+    // string memory mnemonic = vm.envString('MNEMONIC');
 
-    if (bytes(mnemonic).length > 30) {
-      deployerPrivateKey = vm.deriveKey(mnemonic, 0);
-    } else {
-      deployerPrivateKey = vm.envUint('PRIVATE_KEY');
-    }
+    // if (bytes(mnemonic).length > 30) {
+    //   deployerPrivateKey = vm.deriveKey(mnemonic, 0);
+    // } else {
+    //   deployerPrivateKey = vm.envUint('PRIVATE_KEY');
+    // }
 
- //   address composableCow = vm.envAddress("COMPOSABLE_COW");
+		deployerPrivateKey = vm.envUint('PRIVATE_KEY');
+
+   address composableCow = vm.envAddress("COMPOSABLE_COW");
 
  /*//////////////////////////////////////////////////////////////
                                 OPERATIONS

@@ -101,3 +101,8 @@ cast --help
 ### Documentation
 
 https://book.getfoundry.sh/
+
+
+verify contract:
+
+forge verify-contract 0xaadc9A18C1bD99721913d50C6730cd7819954663 GenericArb --constructor-args-path constructor-args.txt  --chain gnosis --watch --verifier-url https://api.gnosisscan.io/api
