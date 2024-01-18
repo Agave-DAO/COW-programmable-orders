@@ -45,7 +45,9 @@ contract GenericArb is BaseConditionalOrder {
 		address agaveDao = 0xb4c575308221CAA398e0DD2cDEB6B2f10d7b000A;
 		address owner;
 
-		uint256 amtToSellPerBatch = 20 ether;
+		uint256 amtToSellDefault = 20 ether;
+
+        mapping(address => uint256) amtToSellForAsset;
 
     constructor(ComposableCoW _composableCow, address _owner) {
         composableCow = _composableCow;
@@ -74,7 +76,8 @@ contract GenericArb is BaseConditionalOrder {
         _validateData(data);
 
 				uint oracleSellTokenPrice = oracle.getAssetPrice(address(data.sellToken));
-				uint sellAmount = 1 ether * amtToSellPerBatch / oracleSellTokenPrice;
+                uint amtToSell = (amtToSellForAsset[address(data.sellToken)] == 0) ? amtToSellForAsset[address(data.sellToken)] : amtToSellDefault;
+				uint sellAmount = 1 ether * amtToSell / oracleSellTokenPrice;
 
 				if (IERC20(data.sellToken).balanceOf(owner) < sellAmount){
 						revert("no balance");
@@ -105,9 +108,9 @@ contract GenericArb is BaseConditionalOrder {
 
     }
 
-		function changeAmtToSell(uint newAmt) external {
+		function changeAmtToSellForAsset(address assetAddress, uint newAmt) external {
 				require(msg.sender == owner);
-				amtToSellPerBatch = newAmt;
+				amtToSellForAsset[assetAddress] = newAmt;
 		}
 
 		/**
