@@ -24,7 +24,7 @@ string constant ERR_MIN_SELL_AMOUNT = "sellAmount must be gt 0";
  * @author CoW Protocol Developers
  * @author Pogo (changes specific to )
  */
-contract GenericArb is BaseConditionalOrder {
+contract AgaveBuybackOrder is BaseConditionalOrder {
     /// @dev `staticInput` data struct for buying
     struct Data {
         IERC20 sellToken;
@@ -39,7 +39,7 @@ contract GenericArb is BaseConditionalOrder {
         AgaveHoldingsOracle TreasuryOracle =
         AgaveHoldingsOracle(0xA671d7D0C571e5B92510dE6c5d0B5C1635eC8791);
 		address agaveDao = 0xb4c575308221CAA398e0DD2cDEB6B2f10d7b000A;
-		address owner;
+		address owner; // owner is the holder of the funds for sale
 
 		uint256 amtToSellDefault = 25 ether;
 
@@ -47,13 +47,12 @@ contract GenericArb is BaseConditionalOrder {
 
     constructor(ComposableCoW _composableCow, address _owner) {
         composableCow = _composableCow;
-				owner = _owner;
+		owner = _owner;
     }
 
 
 		function transferOwnership(address newOwner) external {
 				require(msg.sender == owner);
-
 				owner = newOwner;
 		}
 
@@ -90,8 +89,8 @@ contract GenericArb is BaseConditionalOrder {
 
         order = GPv2Order.Data(
             data.sellToken,
-            buyToken,
-            owner,
+            IERC20(buyToken),
+            agaveDao,
             sellAmount,
             marketBuyAmount,
             validToBucket(300), // expiry
@@ -123,7 +122,7 @@ contract GenericArb is BaseConditionalOrder {
      * @param data `Data` struct containing the order parameters
      * @dev Throws if the order provided is not valid.
      */
-    function validateData(bytes memory data) external pure override {
+    function validateData(bytes memory data) external view override {
         _validateData(abi.decode(data, (Data)));
     }
 
@@ -133,7 +132,7 @@ contract GenericArb is BaseConditionalOrder {
      * @param data `Data` struct containing the order parameters
      * @dev Throws if the order provided is not valid.
      */
-    function _validateData(Data memory data) internal pure {
-        if (data.sellToken == data.buyToken) revert OrderNotValid(ERR_SAME_TOKENS);
+    function _validateData(Data memory data) internal view {
+        if (data.sellToken == IERC20(AGVE)) revert OrderNotValid(ERR_SAME_TOKENS);
     }
 }
